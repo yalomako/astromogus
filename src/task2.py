@@ -3,10 +3,11 @@ from base_task import *
 from task1 import Checkpoint
 
 class Tube(pg.sprite.Sprite):
-   def __init__(self, pos):
+   def __init__(self, pos, color, id: int):
       super().__init__()
       self.image = pg.Surface((50, 50))
       self.rect = self.image.get_rect(center = pos)
+      self.image.fill(color)
    def update(self, surface):
       surface.blit(self.image, self.rect)
 class Interface(pg.sprite.Sprite):
@@ -16,10 +17,14 @@ class Interface(pg.sprite.Sprite):
       self.image.fill("white")
       self.rect = self.image.get_rect(topleft = (100, 100))
       self.tubes = pg.sprite.Group(
-         Tube((0, 25)),
-         Tube((0, 125)),
-         Tube((0, 225)),
-         Tube((0, 325))
+         Tube((0, 110), "yellow", 1),
+         Tube((0, 220), "green", 2),
+         Tube((0, 330), "blue", 3),
+         Tube((0, 440), "orange", 4),
+         Tube((550, 110), "green", 2),
+         Tube((550, 220), "orange", 4),
+         Tube((550, 330), "yellow", 1),
+         Tube((550, 440), "blue", 3)
       )
    def update(self):
       flag = True
