@@ -17,8 +17,9 @@ class Room(pg.sprite.Sprite):
         cls.ALL_HIT_BOXES.extend(hit_boxes)
 
     def update(self):
-        for hit_box in self.ALL_HIT_BOXES:
-            pg.draw.rect(pg.display.get_surface(), 'red', hit_box, 2)
+        pass
+        # for hit_box in self.ALL_HIT_BOXES:
+        #     pg.draw.rect(pg.display.get_surface(), 'red', hit_box, 2)
 
 
 
