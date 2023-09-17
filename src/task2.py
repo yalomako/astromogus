@@ -63,6 +63,7 @@ class TubesInterface(pg.sprite.Sprite):
          pg.display.get_surface().blit(self.mark, (225, 100))
          self.finished = True
 
+
    def draw_lines(self):
       for i in self.completed_tubes:
          pg.draw.line(pg.display.get_surface(), i[0].color, i[0].rect.center, i[1].rect.center, 25)
@@ -95,11 +96,17 @@ class Tap():
 
 
 class WaterInterface(pg.sprite.Sprite):
-   def __init__(self, pos):
+   def __init__(self):
       super().__init__()
       self.image = pg.Surface((550, 550))
       self.rect = self.image.get_rect(topleft = (100, 100))
-
+      self.finished = False
+   def draw(self):
+      pg.draw.line(pg.display.get_surface(), "white", (100, 375), (650, 375), 25)
+      pg.draw.circle(pg.display.get_surface(), 'red', (200, 375), 25)
+      pg.draw.circle(pg.display.get_surface(), 'red', (310, 375), 25)
+      pg.draw.circle(pg.display.get_surface(), 'red', (420, 375), 25)
+      pg.draw.circle(pg.display.get_surface(), 'red', (530, 375), 25)
    def update(self):
       flag = True
       while flag:
@@ -109,7 +116,9 @@ class WaterInterface(pg.sprite.Sprite):
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                flag = False
          pg.display.get_surface().blit(self.image, self.rect)
+         self.draw()
          pg.display.update()
+
 
 
 
@@ -118,9 +127,13 @@ class TaskTubes(BaseTask):
       super().__init__(*groups)
       self.image = self.def_font.render("Задание tubes[-]", True, "White", "Black")
       self.rect = self.image.get_rect(y = 50)
+      self.first_interface = TubesInterface()
+      self.second_interface = WaterInterface()
+      self.interface = self.first_interface
+      self.first_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
+      self.second_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
 
-      self.interface = TubesInterface()
-      self.checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
+      self.checkpoint = self.first_checkpoint
       self.checkpoint.activate()
    def open_interface(self, player):
       f_key_pressed = pg.key.get_pressed()[pg.K_f]
@@ -133,6 +146,8 @@ class TaskTubes(BaseTask):
       if not self.interface.finished:
          self.open_interface(player)
       else:
-         self.checkpoint.switch = False
-         self.checkpoint = Checkpoint((50, 100), (0, 0), self.moving_sprites)
+         self.interface = self.second_interface
+         self.checkpoint.kill()
+         self.checkpoint = self.second_checkpoint
          self.checkpoint.activate()
+
