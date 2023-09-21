@@ -43,9 +43,9 @@ class TubesInterface(pg.sprite.Sprite):
       self.image.fill("white")
       self.mark = pg.image.load("images/check_mark.png")
       self.finished = False
-   def check_tubes(self):
+   def chose_tube(self):
       for i in self.tubes:
-         if i.is_chosen():
+         if i.is_chosen() and not i.busy:
             if self.first_chosen == None and i.side == 1:
                   self.first_chosen = i
             elif self.second_chosen == None and i.side == 2:
@@ -80,7 +80,7 @@ class TubesInterface(pg.sprite.Sprite):
                exit()
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                flag = False
-         self.check_tubes()
+         self.chose_tube()
          self.check_connection()
          pg.display.get_surface().blit(self.image, self.rect)
          self.tubes.update(pg.display.get_surface())
@@ -89,24 +89,41 @@ class TubesInterface(pg.sprite.Sprite):
          self.complete()
          pg.display.update()
 
-class Tap():
+class Tap(pg.sprite.Sprite):
    def __init__(self, pos):
-      self.image = pg.Surface((50, 50))
-      self.rect = self.image.get_rect(topleft = pos)
-
-
+      super().__init__()
+      self.color = "red"
+      self.rect = pg.draw.circle(pg.display.get_surface(), self.color, pos, 25)
+      self.completed = False
+   def change_color(self):
+      mouse_clicked = pg.mouse.get_pressed()
+      mouse_pos = pg.mouse.get_pos()
+      if mouse_clicked[0] and self.rect.collidepoint(mouse_pos):
+         self.color = "green"
+         self.completed = True
+   def update(self):
+      self.change_color()
+      pg.draw.circle(pg.display.get_surface(), self.color, self.rect.center, 25)
 class WaterInterface(pg.sprite.Sprite):
    def __init__(self):
       super().__init__()
       self.image = pg.Surface((550, 550))
       self.rect = self.image.get_rect(topleft = (100, 100))
       self.finished = False
-   def draw(self):
-      pg.draw.line(pg.display.get_surface(), "white", (100, 375), (650, 375), 25)
-      pg.draw.circle(pg.display.get_surface(), 'red', (200, 375), 25)
-      pg.draw.circle(pg.display.get_surface(), 'red', (310, 375), 25)
-      pg.draw.circle(pg.display.get_surface(), 'red', (420, 375), 25)
-      pg.draw.circle(pg.display.get_surface(), 'red', (530, 375), 25)
+      self.completed_taps = []
+      self.taps = pg.sprite.Group(
+         Tap((200, 375)),
+         Tap((310, 375)),
+         Tap((420, 375)),
+         Tap((530, 375))
+      )
+   def complete_tap(self):
+      for i in self.taps:
+         if i.completed:
+            self.completed_taps.append(i)
+            if len(self.completed_taps) == 4:
+               self.finished = True
+
    def update(self):
       flag = True
       while flag:
@@ -116,7 +133,9 @@ class WaterInterface(pg.sprite.Sprite):
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                flag = False
          pg.display.get_surface().blit(self.image, self.rect)
-         self.draw()
+         pg.draw.line(pg.display.get_surface(), "white", (100, 375), (650, 375), 25)
+         self.complete_tap()
+         self.taps.update()
          pg.display.update()
 
 
@@ -130,6 +149,7 @@ class TaskTubes(BaseTask):
       self.first_interface = TubesInterface()
       self.second_interface = WaterInterface()
       self.interface = self.first_interface
+      self.completed = False
       self.first_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
       self.second_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
 
@@ -145,9 +165,13 @@ class TaskTubes(BaseTask):
       pg.display.get_surface().blit(self.image, self.rect)
       if not self.interface.finished:
          self.open_interface(player)
-      else:
+      elif self.interface is self.first_interface:
          self.interface = self.second_interface
          self.checkpoint.kill()
          self.checkpoint = self.second_checkpoint
          self.checkpoint.activate()
+      else:
+         self.checkpoint.kill()
+         self.completed = True
+         self.image = self.def_font.render("Задание tubes[+]", True, "Green", "Black")
 

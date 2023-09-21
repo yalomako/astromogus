@@ -64,7 +64,7 @@ class Player(pg.sprite.Sprite):
             self.animation_timer += 1
             if self.animation_timer == 60:
                 self.animation_timer = 0
-            if keys[pg.K_d] or keys[pg.K_s]:
+            if (keys[pg.K_d] or keys[pg.K_s]) and not keys[pg.K_a]:
                 self.image = self.walk_images[self.animation_timer // 5]
             elif keys[pg.K_a] or keys[pg.K_w]:
                 self.image = pg.transform.flip(self.walk_images[self.animation_timer // 5], True, False)
