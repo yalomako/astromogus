@@ -142,17 +142,17 @@ class WaterInterface(pg.sprite.Sprite):
 
 
 class TaskTubes(BaseTask):
-   def __init__(self, *groups):
+   def __init__(self, opem_sound, *groups):
       super().__init__(*groups)
       self.image = self.def_font.render("Задание tubes[-]", True, "White", "Black")
       self.rect = self.image.get_rect(y = 50)
       self.first_interface = TubesInterface()
       self.second_interface = WaterInterface()
       self.interface = self.first_interface
-      self.completed = False
       self.first_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
       self.second_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
-
+      self.open_sound = opem_sound
+      self.sound_played = False
       self.checkpoint = self.first_checkpoint
       self.checkpoint.activate()
    def open_interface(self, player):
@@ -160,7 +160,9 @@ class TaskTubes(BaseTask):
       if self.checkpoint.rect.colliderect(player.rect):
          pg.display.get_surface().blit(self.press_f_image, (300, 400))
          if f_key_pressed:
+            self.open_sound.play(0)
             self.interface.update()
+
    def update(self, player):
       pg.display.get_surface().blit(self.image, self.rect)
       if not self.interface.finished:
@@ -172,6 +174,9 @@ class TaskTubes(BaseTask):
          self.checkpoint.activate()
       else:
          self.checkpoint.kill()
-         self.completed = True
+         self.complete = True
+         if not self.sound_played:
+            self.sound_played = True
+            self.complete_sound.play(0)
          self.image = self.def_font.render("Задание tubes[+]", True, "Green", "Black")
 

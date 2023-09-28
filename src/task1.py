@@ -42,7 +42,7 @@ class TaskVirus(BaseTask):
         super().__init__(*groups)
         self.image = self.def_font.render("Задание Virus[-]", True, "White", "Black")
         self.rect = self.image.get_rect()
-
+        self.started = True
         self.virus = Virus(self.moving_sprites)
         self.checkpoint = Checkpoint((160, 160), (1250, 150), self.moving_sprites)
 
@@ -61,6 +61,8 @@ class TaskVirus(BaseTask):
             if f_key_pressed:
                 self.image = self.def_font.render("Задание Virus[+]", True, "Green", "Black")
                 self.checkpoint.kill()
+                self.complete = True
+                self.complete_sound.play(0)
 
     def update(self, player):
         self.take_virus(player)
