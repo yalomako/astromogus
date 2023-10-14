@@ -5,7 +5,8 @@ from map import Room
 
 
 class Player(pg.sprite.Sprite):
-    def __init__(self, group, music):
+    walking_sound = pg.mixer.Sound('sounds/walking.mp3')
+    def __init__(self, group):
         super().__init__(group)
         self.default_image = pg.transform.scale(pg.image.load("images/pl/idle.png"), (50, 63))
         self.image = self.default_image
@@ -14,12 +15,9 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect(center=(pg.display.get_window_size()[0] // 2,
                                                 pg.display.get_window_size()[1] // 2))
 
-        self.m_played = False
         self.speed = 3
         self.direction = pg.math.Vector2()
-
         self.animation_timer = 0
-        self.music = music
 
     def set_dir(self):
         keys = pg.key.get_pressed()
@@ -62,19 +60,19 @@ class Player(pg.sprite.Sprite):
 
     def animate(self):
         keys = pg.key.get_pressed()
-        if not self.m_played:
-            self.m_played = True
-            self.music.play(-1)
         if keys[pg.K_d] or keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_w]:
             self.animation_timer += 1
             if self.animation_timer == 60:
                 self.animation_timer = 0
+            if self.animation_timer == 1:
+                self.walking_sound.play()
             if (keys[pg.K_d] or keys[pg.K_s]) and not keys[pg.K_a]:
                 self.image = self.walk_images[self.animation_timer // 5]
             elif keys[pg.K_a] or keys[pg.K_w]:
                 self.image = pg.transform.flip(self.walk_images[self.animation_timer // 5], True, False)
         else:
-            self.music.stop()
+            self.animation_timer = 0
+            self.walking_sound.stop()
             if self.direction == 1:
                 self.image = self.default_image
             else:

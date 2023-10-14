@@ -4,16 +4,17 @@ from map import Camera, Room
 from support import rooms_info
 from src.task1 import TaskVirus
 from task2 import TaskTubes
+from zxcursed import *
+from task3 import *
 pg.init()
 
 class Game:
     soundtrack1 = pg.mixer.Sound('sounds/soundtrack1.mp3')
-    walking = pg.mixer.Sound('sounds/walking.mp3')
+    soundtrack1.set_volume(0.01)
     open_interface = pg.mixer.Sound('sounds/open_interface.mp3')
     def __init__(self):
         self.screen = pg.display.set_mode((700, 700))
         self.fr = pg.time.Clock()
-
 
         # Main groups
         self.camera_group = Camera()
@@ -25,9 +26,11 @@ class Game:
         # Tasks
         self.task1 = TaskVirus(self.static_group)
         self.task2 = TaskTubes(self.open_interface)
+        self.task3 = AsteroidTask()
         self.camera_group.add(*self.task1.moving_sprites)
+        self.camera_group.add(*self.task3.moving_sprites)
         # Player
-        self.player = Player(self.camera_group, self.walking)
+        self.player = Player(self.camera_group)
 
     def run(self):
         self.soundtrack1.play(-1)
@@ -44,7 +47,9 @@ class Game:
             self.camera_group.custom_draw(self.player)
             self.camera_group.update()
             self.static_group.update(self.player)
-
+            # draw_lines()
+            # hitbox_draw()
+            self.task3.update(self.player)
             pg.display.update()
             self.fr.tick(60)
 
