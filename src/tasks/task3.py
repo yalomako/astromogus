@@ -1,14 +1,12 @@
 import pygame as pg
 import random as rd
 import time
-from base_task import *
-from task1 import Checkpoint
+from src.tasks.base_task import BaseTask
+from src.tasks.task1 import Checkpoint
 class Asteroid(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pg.image.load('images/asteroid_image.png')
-        self.rect = self.image.get_rect(midleft=(125, rd.randint(150, 625)))
-        self.image = pg.image.load('../images/asteroid_image.png')
         self.rect = self.image.get_rect(midleft=(rd.randint(103, 560), rd.randint(103, 561)))
         self.clicked = False
         self.killed = False
