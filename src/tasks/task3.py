@@ -8,6 +8,8 @@ class Asteroid(pg.sprite.Sprite):
         super().__init__()
         self.image = pg.image.load('images/asteroid_image.png')
         self.rect = self.image.get_rect(midleft=(125, rd.randint(150, 625)))
+        self.image = pg.image.load('../images/asteroid_image.png')
+        self.rect = self.image.get_rect(midleft=(rd.randint(103, 560), rd.randint(103, 561)))
         self.clicked = False
         self.killed = False
         self.boom_images = [pg.image.load(f'images/aster_boom{i}.png')for i in range(1,4)]
