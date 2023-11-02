@@ -116,6 +116,7 @@ class AsteroidInterface():
                     i.destroy()
 
             self.asteroids.update()
+            self.counter.update()
             self.aim.update()
             self.fps.tick(60)
             pg.display.update()
