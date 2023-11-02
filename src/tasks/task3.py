@@ -40,7 +40,7 @@ class Asteroid(pg.sprite.Sprite):
         return start_dir
     def move(self):
         self.rect.center += self.dir
-        if self.rect.right == 625:
+        if self.rect.right >= 650 or self.rect.left <= 101 or self.rect.bottom >= 650 or self.rect.top <= 101:
             self.kill()
     def update(self):
         pg.display.get_surface().blit(self.image, self.rect)
