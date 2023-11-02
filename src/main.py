@@ -28,7 +28,6 @@ class Game:
         self.task2 = TaskTubes(self.open_interface)
         self.task3 = AsteroidTask()
         self.camera_group.add(*self.task1.moving_sprites)
-        self.camera_group.add(*self.task3.moving_sprites)
         # Player
         self.player = Player(self.camera_group)
 
