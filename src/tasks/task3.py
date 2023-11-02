@@ -93,6 +93,7 @@ class AsteroidInterface():
       self.timer = 0
       self.aim = Aim()
       self.fps = pg.time.Clock()
+      self.counter = Counter()
       self.asteroids = pg.sprite.Group(
         Asteroid()
       )
