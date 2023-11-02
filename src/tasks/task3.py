@@ -14,7 +14,7 @@ class Asteroid(pg.sprite.Sprite):
         self.killed = False
         self.boom_images = [pg.image.load(f'images/aster_boom{i}.png')for i in range(1,4)]
         self.animation_timer = 0
-        self.dir = pg.Vector2(rd.randint(1, 3), rd.randint(1, 2))
+        self.dir = self.get_dir()
 
     def destroy(self):
          self.animation_timer += 1
