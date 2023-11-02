@@ -45,6 +45,19 @@ class Asteroid(pg.sprite.Sprite):
         self.move()
 
 
+class Counter():
+    def __init__(self):
+        self.font = pg.font.SysFont("arial", 30, True)
+        self.image = self.font.render('0', False, 'black')
+        self.rect = self.image.get_rect(topleft = (100, 100))
+        self.number = 0
+    def count(self):
+        self.number += 1
+        self.image = self.font.render(self.number.__str__(), False, 'black')
+
+    def update(self):
+        pg.display.get_surface().blit(self.image, self.rect)
+
 class Aim():
     def __init__(self):
         self.image = pg.image.load('images/aim_image.png')
