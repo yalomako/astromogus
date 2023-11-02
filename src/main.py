@@ -1,11 +1,11 @@
 import pygame as pg
 from charecters import Player
+import pygame as pg
 from map import Camera, Room
 from support import rooms_info
-from src.task1 import TaskVirus
-from task2 import TaskTubes
-from zxcursed import *
-from task3 import *
+from tasks.task1 import TaskVirus
+from tasks.task2 import TaskTubes
+from tasks.task3 import AsteroidTask
 pg.init()
 
 class Game:
