@@ -1,6 +1,6 @@
 import pygame as pg
 from support import walk_images
-from task1 import Virus
+from src.tasks.task1 import Virus
 from map import Room
 
 
@@ -8,7 +8,7 @@ class Player(pg.sprite.Sprite):
     walking_sound = pg.mixer.Sound('sounds/walking.mp3')
     def __init__(self, group):
         super().__init__(group)
-        self.default_image = pg.transform.scale(pg.image.load("images/pl/idle.png"), (50, 63))
+        self.default_image = pg.transform.scale(pg.image.load("images/player/idle.png"), (50, 63))
         self.image = self.default_image
         self.walk_images = walk_images
 
