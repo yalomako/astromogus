@@ -131,7 +131,7 @@ class AsteroidTask(BaseTask):
     def __init__(self):
         super().__init__()
         self.image = self.def_font.render("Задание Asteroid[-]", True, "White", "Black")
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(y=100)
         self.checkpoint = Checkpoint((50, 50), (1200, -250))
         self.checkpoint.activate()
         self.moving_sprites.add(self.checkpoint)
