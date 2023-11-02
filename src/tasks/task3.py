@@ -21,8 +21,21 @@ class Asteroid(pg.sprite.Sprite):
          if self.animation_timer in (0, 10, 20):
             self.image = self.boom_images[self.animation_timer // 10]
 
-
-
+    def get_dir(self):
+        start_dir = pg.Vector2()
+        if self.rect.centerx >= 375 and self.rect.centery >= 375:
+            start_dir.x = rd.randint(-3, -1)
+            start_dir.y = rd.randint(-3, -1)
+        elif self.rect.centerx <= 375 and self.rect.centery <= 375:
+            start_dir.x = rd.randint(1, 3)
+            start_dir.y = rd.randint(1, 3)
+        elif self.rect.centerx <= 375 and self.rect.centery >= 375:
+            start_dir.x = rd.randint(1, 3)
+            start_dir.y = rd.randint(-3, -1)
+        else:
+            start_dir.x = rd.randint(-3, -1)
+            start_dir.y = rd.randint(1, 3)
+        return start_dir
     def move(self):
         self.rect.center += self.dir
         if self.rect.right == 625:
