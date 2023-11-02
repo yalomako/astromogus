@@ -43,6 +43,11 @@ class Game:
                 self.camera_group.add(*self.task2.moving_sprites)
                 self.static_group.add(self.task2)
                 self.task2.started = True
+            elif self.task2.complete and not self.task3.started:
+                self.camera_group.remove(*self.task2.moving_sprites)
+                self.camera_group.add(*self.task3.moving_sprites)
+                self.static_group.add(self.task3)
+                self.task3.started = True
             self.camera_group.custom_draw(self.player)
             self.camera_group.update()
             self.static_group.update(self.player)
