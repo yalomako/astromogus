@@ -114,7 +114,11 @@ class AsteroidInterface():
             for i in self.asteroids:
                 if self.aim.shooting and i.rect.collidepoint(pg.mouse.get_pos()):
                     i.destroy()
-
+                    if i not in self.asteroids:
+                        self.counter.count()
+            if self.counter.number == 10:
+                self.finished = True
+                flag = False
             self.asteroids.update()
             self.counter.update()
             self.aim.update()
