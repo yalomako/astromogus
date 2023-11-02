@@ -143,9 +143,14 @@ class AsteroidTask(BaseTask):
             pg.display.get_surface().blit(self.press_f_image, (300, 400))
             if f_key_pressed:
                 self.interface.update()
-
+    def finish(self):
+        if self.interface.finished:
+            self.image = self.def_font.render("Задание Asteroid[+]", True, "Green", "Black")
+            self.checkpoint.kill()
     def update(self, pl):
         pg.display.get_surface().blit(self.image, self.rect)
         self.checkpoint.update()
-        self.open_interface(pl)
+        self.finish()
+        if not self.interface.finished:
+            self.open_interface(pl)
 
