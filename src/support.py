@@ -1,14 +1,14 @@
 import pygame as pg
 
-walk_images = tuple(pg.transform.scale(pg.image.load(f"images/pl/walk_animation/Walk{i}.png"), (50, 63))
+walk_images = tuple(pg.transform.scale(pg.image.load(f"images/player/walk_animation/Walk{i}.png"), (50, 63))
                     for i in range(1, 13))
 
 rooms_info = (
-    ('images/lci/up_engine.png', (-320, -90), "up_eng"),
-    ("images/lci/hall1.png", (65, 13), "com_eng_caf"),
-    ("images/lci/com.png", (237, 190), "communication"),
-    ("images/lci/cafeteria.png", (780, -350), "cafeteria"),
-    ('images/lci/hall2.png', (1195, 610), "bed_hall")
+    ('images/locations/up_engine.png', (-320, -90), "up_eng"),
+    ("images/locations/hall1.png", (65, 13), "com_eng_caf"),
+    ("images/locations/com.png", (237, 190), "communication"),
+    ("images/locations/cafeteria.png", (780, -350), "cafeteria"),
+    ('images/locations/hall2.png', (1195, 610), "bed_hall")
 )
 
 
