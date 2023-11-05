@@ -1,4 +1,3 @@
-import pygame as pg
 from charecters import Player
 import pygame as pg
 from map import Camera, Room
@@ -53,7 +52,7 @@ class Game:
             self.static_group.update(self.player)
             # draw_lines()
             # hitbox_draw()
-            self.task3.update(self.player)
+
             pg.display.update()
             self.fr.tick(60)
 

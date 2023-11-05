@@ -1,6 +1,6 @@
 import pygame as pg
-from base_task import *
-from task1 import Checkpoint
+from src.tasks.base_task import BaseTask
+from src.tasks.task1 import Checkpoint
 
 class Tube(pg.sprite.Sprite):
    def __init__(self, pos, color, id: int, side):
