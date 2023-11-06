@@ -39,8 +39,7 @@ class Checkpoint(pg.sprite.Sprite):
 
 class TaskVirus(BaseTask):
     def __init__(self, *groups):
-        super().__init__(*groups)
-        self.image = self.def_font.render("Задание Virus[-]", True, "White", "Black")
+        super().__init__('Virus', *groups)
         self.rect = self.image.get_rect()
         self.started = True
         self.virus = Virus(self.moving_sprites)
@@ -59,7 +58,7 @@ class TaskVirus(BaseTask):
             pg.display.get_surface().blit(self.press_f_image, (300, 400))
             f_key_pressed = pg.key.get_pressed()[pg.K_f]
             if f_key_pressed:
-                self.image = self.def_font.render("Задание Virus[+]", True, "Green", "Black")
+                self.image = self.complete_image
                 self.checkpoint.kill()
                 self.complete = True
                 self.complete_sound.play(0)

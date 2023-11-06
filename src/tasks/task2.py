@@ -143,8 +143,7 @@ class WaterInterface(pg.sprite.Sprite):
 
 class TaskTubes(BaseTask):
    def __init__(self, opem_sound, *groups):
-      super().__init__(*groups)
-      self.image = self.def_font.render("Задание tubes[-]", True, "White", "Black")
+      super().__init__('Tubes', *groups)
       self.rect = self.image.get_rect(y = 50)
       self.first_interface = TubesInterface()
       self.second_interface = WaterInterface()
@@ -178,5 +177,5 @@ class TaskTubes(BaseTask):
          if not self.sound_played:
             self.sound_played = True
             self.complete_sound.play(0)
-         self.image = self.def_font.render("Задание tubes[+]", True, "Green", "Black")
+         self.image = self.complete_image
 

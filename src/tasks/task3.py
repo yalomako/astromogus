@@ -127,8 +127,7 @@ class AsteroidInterface():
 
 class AsteroidTask(BaseTask):
     def __init__(self):
-        super().__init__()
-        self.image = self.def_font.render("Задание Asteroid[-]", True, "White", "Black")
+        super().__init__('Asteroid')
         self.rect = self.image.get_rect(y=100)
         self.checkpoint = Checkpoint((50, 50), (1200, -250))
         self.checkpoint.activate()
@@ -143,7 +142,7 @@ class AsteroidTask(BaseTask):
                 self.interface.update()
     def finish(self):
         if self.interface.finished:
-            self.image = self.def_font.render("Задание Asteroid[+]", True, "Green", "Black")
+            self.image = self.complete_image
             self.checkpoint.kill()
     def update(self, pl):
         pg.display.get_surface().blit(self.image, self.rect)
