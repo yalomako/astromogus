@@ -142,7 +142,7 @@ class WaterInterface(pg.sprite.Sprite):
 
 
 class TaskTubes(BaseTask):
-   def __init__(self, opem_sound, *groups):
+   def __init__(self, *groups):
       super().__init__('Tubes', *groups)
       self.rect = self.image.get_rect(y = 50)
       self.first_interface = TubesInterface()
@@ -150,7 +150,6 @@ class TaskTubes(BaseTask):
       self.interface = self.first_interface
       self.first_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
       self.second_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
-      self.open_sound = opem_sound
       self.sound_played = False
       self.checkpoint = self.first_checkpoint
       self.checkpoint.activate()
