@@ -12,7 +12,6 @@ class Tube(pg.sprite.Sprite):
         self.side = side
         self.busy = False
         self.color = color
-        self.pos = pos
 
     def is_chosen(self):
         mouse_pos = pg.mouse.get_pos()
