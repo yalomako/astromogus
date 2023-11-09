@@ -1,7 +1,8 @@
 import pygame as pg
 import random as rd
-import time
 from src.tasks.base_task import BaseTask, Checkpoint
+
+
 class Asteroid(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -9,15 +10,15 @@ class Asteroid(pg.sprite.Sprite):
         self.rect = self.image.get_rect(midleft=(rd.randint(103, 560), rd.randint(103, 561)))
         self.clicked = False
         self.killed = False
-        self.boom_images = [pg.image.load(f'images/aster_boom{i}.png')for i in range(1,4)]
+        self.boom_images = [pg.image.load(f'images/aster_boom{i}.png') for i in range(1, 4)]
         self.animation_timer = 0
         self.dir = self.get_dir()
 
     def destroy(self):
-         self.animation_timer += 1
-         if self.animation_timer == 21:
-             self.kill()
-         if self.animation_timer in (0, 10, 20):
+        self.animation_timer += 1
+        if self.animation_timer == 21:
+            self.kill()
+        if self.animation_timer in (0, 10, 20):
             self.image = self.boom_images[self.animation_timer // 10]
 
     def get_dir(self):
@@ -28,28 +29,31 @@ class Asteroid(pg.sprite.Sprite):
         elif self.rect.centerx <= 375 and self.rect.centery <= 375:
             start_dir.x = rd.randint(1, 3)
             start_dir.y = rd.randint(1, 3)
-        elif self.rect.centerx <= 375 and self.rect.centery >= 375:
+        elif self.rect.centerx < 375 < self.rect.centery:
             start_dir.x = rd.randint(1, 3)
             start_dir.y = rd.randint(-3, -1)
         else:
             start_dir.x = rd.randint(-3, -1)
             start_dir.y = rd.randint(1, 3)
         return start_dir
+
     def move(self):
         self.rect.center += self.dir
         if self.rect.right >= 650 or self.rect.left <= 101 or self.rect.bottom >= 650 or self.rect.top <= 101:
             self.kill()
+
     def update(self):
         pg.display.get_surface().blit(self.image, self.rect)
         self.move()
 
 
-class Counter():
+class Counter:
     def __init__(self):
         self.font = pg.font.SysFont("arial", 30, True)
         self.image = self.font.render('0', False, 'black')
-        self.rect = self.image.get_rect(topleft = (100, 100))
+        self.rect = self.image.get_rect(topleft=(100, 100))
         self.number = 0
+
     def count(self):
         self.number += 1
         self.image = self.font.render(self.number.__str__(), False, 'black')
@@ -57,11 +61,13 @@ class Counter():
     def update(self):
         pg.display.get_surface().blit(self.image, self.rect)
 
-class Aim():
+
+class Aim:
     def __init__(self):
         self.image = pg.image.load('images/aim_image.png')
         self.rect = self.image.get_rect(center=(325, 325))
         self.shooting = False
+
     def shoot_scope(self):
         mouse_pos = pg.mouse.get_pos()
         if pg.mouse.get_pressed()[0]:
@@ -71,31 +77,34 @@ class Aim():
                 self.rect.centerx = mouse_pos[0]
             self.shooting = True
         else:
-                self.shooting = False
+            self.shooting = False
+
     def draw_lines(self):
         pg.draw.line(pg.display.get_surface(), 'black', (100, 650), self.rect.center, 5)
         pg.draw.line(pg.display.get_surface(), 'black', (650, 650), self.rect.center, 5)
+
     def update(self):
         pg.display.get_surface().blit(self.image, self.rect)
         self.draw_lines()
         self.shoot_scope()
 
-class AsteroidInterface():
-   def __init__(self):
-      super().__init__()
-      self.image = pg.Surface((550, 550))
-      self.rect = self.image.get_rect(topleft = (100, 100))
-      self.image.fill('white')
-      self.finished = False
-      self.timer = 0
-      self.aim = Aim()
-      self.fps = pg.time.Clock()
-      self.counter = Counter()
-      self.asteroids = pg.sprite.Group(
-        Asteroid()
-      )
 
-   def update(self):
+class AsteroidInterface:
+    def __init__(self):
+        super().__init__()
+        self.image = pg.Surface((550, 550))
+        self.rect = self.image.get_rect(topleft=(100, 100))
+        self.image.fill('white')
+        self.finished = False
+        self.timer = 0
+        self.aim = Aim()
+        self.fps = pg.time.Clock()
+        self.counter = Counter()
+        self.asteroids = pg.sprite.Group(
+            Asteroid()
+        )
+
+    def update(self):
         flag = True
         while flag:
             for event in pg.event.get():
@@ -123,7 +132,6 @@ class AsteroidInterface():
             pg.display.update()
 
 
-
 class AsteroidTask(BaseTask):
     def __init__(self):
         super().__init__('Asteroid')
@@ -141,6 +149,7 @@ class AsteroidTask(BaseTask):
             if f_key_pressed:
                 self.open_sound.play(0)
                 self.interface.update()
+
     def finish(self):
         if self.interface.finished:
             self.image = self.complete_image
@@ -148,10 +157,10 @@ class AsteroidTask(BaseTask):
             if not self.sound_played:
                 self.complete_sound.play(0)
                 self.sound_played = True
+
     def update(self, pl):
         pg.display.get_surface().blit(self.image, self.rect)
         self.checkpoint.update()
         self.finish()
         if not self.interface.finished:
             self.open_interface(pl)
-
