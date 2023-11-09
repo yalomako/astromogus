@@ -10,33 +10,6 @@ class Virus(pg.sprite.Sprite):
         self.image.fill("green")
 
 
-class Checkpoint(pg.sprite.Sprite):
-    def __init__(self, size: tuple, pos: tuple, *groups):
-        super().__init__(*groups)
-        self.image = pg.Surface(size)
-        self.image.fill("green")
-        self.image.set_alpha(0)
-
-        self.rect = self.image.get_rect(center=pos)
-
-        self.transparency = 0
-        self.switch = False
-
-    def animate(self):
-        self.transparency += 2
-        self.image.set_alpha(self.transparency)
-        if self.transparency >= 100:
-            self.transparency = 0
-
-    def activate(self):
-        if not self.switch:
-            self.switch = True
-
-    def update(self):
-        if self.switch:
-            self.animate()
-
-
 class TaskVirus(BaseTask):
     def __init__(self, *groups):
         super().__init__('Virus', *groups)

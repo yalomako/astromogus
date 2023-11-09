@@ -1,8 +1,7 @@
 import pygame as pg
 import random as rd
 import time
-from src.tasks.base_task import BaseTask
-from src.tasks.task1 import Checkpoint
+from src.tasks.base_task import BaseTask, Checkpoint
 class Asteroid(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
