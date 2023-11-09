@@ -1,5 +1,5 @@
 import pygame as pg
-from src.tasks.base_task import BaseTask
+from src.tasks.base_task import BaseTask, Checkpoint
 
 
 class Virus(pg.sprite.Sprite):
