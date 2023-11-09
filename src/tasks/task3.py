@@ -133,17 +133,22 @@ class AsteroidTask(BaseTask):
         self.checkpoint.activate()
         self.moving_sprites.add(self.checkpoint)
         self.interface = AsteroidInterface()
+        self.sound_played = False
 
     def open_interface(self, pla):
         f_key_pressed = pg.key.get_pressed()[pg.K_f]
         if self.checkpoint.rect.colliderect(pla.rect):
             pg.display.get_surface().blit(self.press_f_image, (300, 400))
             if f_key_pressed:
+                self.open_sound.play(0)
                 self.interface.update()
     def finish(self):
         if self.interface.finished:
             self.image = self.complete_image
             self.checkpoint.kill()
+            if not self.sound_played:
+                self.complete_sound.play(0)
+                self.sound_played = True
     def update(self, pl):
         pg.display.get_surface().blit(self.image, self.rect)
         self.checkpoint.update()
