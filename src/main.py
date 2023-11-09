@@ -11,6 +11,7 @@ class Game:
     soundtrack1 = pg.mixer.Sound('sounds/soundtrack1.mp3')
     soundtrack1.set_volume(1)
     open_interface = pg.mixer.Sound('sounds/open_interface.mp3')
+    pg.display.set_caption('Astromogus')
     def __init__(self):
         self.screen = pg.display.set_mode((700, 700))
         self.fr = pg.time.Clock()
