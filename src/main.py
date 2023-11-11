@@ -1,11 +1,13 @@
-from charecters import Player
 import pygame as pg
+from charecters import Player
 from map import Camera, Room
 from support import rooms_info
 from tasks.task1 import TaskVirus
 from tasks.task2 import TaskTubes
 from tasks.task3 import AsteroidTask
+
 pg.init()
+
 
 class Game:
     main_theme = pg.mixer.Sound('sounds/soundtrack1.mp3')
