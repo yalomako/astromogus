@@ -2,9 +2,10 @@ import pygame as pg
 
 pg.init()
 
-class BaseTask(pg.sprite.Sprite):
 
+class BaseTask(pg.sprite.Sprite):
     def_font = pg.font.SysFont("arial", 30, True)
+
     def __init__(self, title, *groups):
         super().__init__(*groups)
         self.image = self.def_font.render(f"Задание {title}[-]", True, "White", "Black")
@@ -15,6 +16,8 @@ class BaseTask(pg.sprite.Sprite):
         self.complete_sound = pg.mixer.Sound('sounds/task_completed.mp3')
         self.moving_sprites = pg.sprite.Group()
         self.press_f_image = self.def_font.render('Нажмите F', True, 'black')
+
+
 class Checkpoint(pg.sprite.Sprite):
     def __init__(self, size: tuple, pos: tuple, *groups):
         super().__init__(*groups)
