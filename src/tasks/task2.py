@@ -154,13 +154,13 @@ class TaskTubes(BaseTask):
     def __init__(self, *groups):
         super().__init__('Tubes', *groups)
         self.rect = self.image.get_rect(y=50)
-        self.first_interface = TubesInterface()
-        self.second_interface = WaterInterface()
-        self.interface = self.first_interface
-        self.first_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
-        self.second_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
+        self.first_part_interface = TubesInterface()
+        self.second_part_interface = WaterInterface()
+        self.interface = self.first_part_interface
+        self.first_part_checkpoint = Checkpoint((65, 150), (640, 230), self.moving_sprites)
+        self.second_part_checkpoint = Checkpoint((50, 100), (-45, -35), self.moving_sprites)
         self.sound_played = False
-        self.checkpoint = self.first_checkpoint
+        self.checkpoint = self.first_part_checkpoint
         self.checkpoint.activate()
 
     def open_interface(self, player):
@@ -175,10 +175,10 @@ class TaskTubes(BaseTask):
         pg.display.get_surface().blit(self.image, self.rect)
         if not self.interface.finished:
             self.open_interface(player)
-        elif self.interface is self.first_interface:
-            self.interface = self.second_interface
+        elif self.interface is self.first_part_interface:
+            self.interface = self.second_part_interface
             self.checkpoint.kill()
-            self.checkpoint = self.second_checkpoint
+            self.checkpoint = self.second_part_checkpoint
             self.checkpoint.activate()
         else:
             self.checkpoint.kill()
