@@ -12,7 +12,9 @@ pg.init()
 class Game:
     main_theme = pg.mixer.Sound('sounds/soundtrack1.mp3')
     main_theme.set_volume(0.25)
+    icon = pg.image.load('images/icon.png')
     pg.display.set_caption('Astromogus')
+    pg.display.set_icon(icon)
     def __init__(self):
         self.screen = pg.display.set_mode((700, 700))
         self.fr = pg.time.Clock()
