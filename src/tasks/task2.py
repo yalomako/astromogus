@@ -163,14 +163,6 @@ class TaskTubes(BaseTask):
         self.checkpoint = self.first_part_checkpoint
         self.checkpoint.activate()
 
-    def open_interface(self, player):
-        f_key_pressed = pg.key.get_pressed()[pg.K_f]
-        if self.checkpoint.rect.colliderect(player.rect):
-            pg.display.get_surface().blit(self.press_f_image, (300, 400))
-            if f_key_pressed:
-                self.open_sound.play(0)
-                self.interface.update()
-
     def update(self, player):
         pg.display.get_surface().blit(self.image, self.rect)
         if not self.interface.finished:

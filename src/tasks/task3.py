@@ -142,13 +142,7 @@ class AsteroidTask(BaseTask):
         self.interface = AsteroidInterface()
         self.sound_played = False
 
-    def open_interface(self, pla):
-        f_key_pressed = pg.key.get_pressed()[pg.K_f]
-        if self.checkpoint.rect.colliderect(pla.rect):
-            pg.display.get_surface().blit(self.press_f_image, (300, 400))
-            if f_key_pressed:
-                self.open_sound.play(0)
-                self.interface.update()
+
 
     def finish(self):
         if self.interface.finished:

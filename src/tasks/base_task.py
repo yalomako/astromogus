@@ -16,6 +16,17 @@ class BaseTask(pg.sprite.Sprite):
         self.complete_sound = pg.mixer.Sound('sounds/task_completed.mp3')
         self.moving_sprites = pg.sprite.Group()
         self.press_f_image = self.def_font.render('Нажмите F', True, 'black')
+        self.interface = None
+        self.checkpoint = None
+    def open_interface(self, player):
+        if self.interface is not None:
+            f_key_pressed = pg.key.get_pressed()[pg.K_f]
+            if self.checkpoint.rect.colliderect(player.rect):
+                pg.display.get_surface().blit(self.press_f_image, (300, 400))
+                if f_key_pressed:
+                    self.open_sound.play(0)
+                    self.interface.update()
+
 
 
 class Checkpoint(pg.sprite.Sprite):
