@@ -5,6 +5,9 @@ from support import rooms_info
 from tasks.task1 import TaskVirus
 from tasks.task2 import TaskTubes
 from tasks.task3 import AsteroidTask
+import cv2
+import sys
+import numpy as np
 
 pg.init()
 
@@ -33,9 +36,39 @@ class Game:
         self.camera_group.add(*self.task1.moving_sprites)
         # Player
         self.player = Player(self.camera_group)
+    def start_video(self):
 
+        video_path = "test_video.mp4"
+        cap = cv2.VideoCapture(video_path)
+
+
+
+        clock = pg.time.Clock()
+        running = True
+
+        while running:
+            ret, frame = cap.read()
+
+            if not ret:
+                break
+
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = np.rot90(frame)
+            frame = np.flipud(frame)
+            frame = pg.surfarray.make_surface(frame)
+
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    running = False
+
+            self.screen.blit(frame, (0, 0))
+            pg.display.flip()
+            clock.tick(30)
+
+        cap.release()
     def run(self):
         self.main_theme.play(-1)
+        self.start_video()
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
